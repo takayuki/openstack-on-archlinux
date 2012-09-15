@@ -1,0 +1,21 @@
+# Contributor:
+pkgname=python2-sqlalchemy-migrate
+pkgver=0.7.2
+pkgrel=1
+pkgdesc='Python 2 schema migration tools for SQLAlchemy'
+arch=('i686' 'x86_64')
+url="http://code.google.com/p/sqlalchemy-migrate/"
+license=('custom')
+depends=('python2')
+source=("http://sqlalchemy-migrate.googlecode.com/files/sqlalchemy-migrate-$pkgver.tar.gz")
+md5sums=('10382fda16f056491e671b5307dd6713')
+
+build() {
+  cd sqlalchemy-migrate-$pkgver
+  python2 setup.py build
+}
+
+package() {
+  cd sqlalchemy-migrate-$pkgver
+  python2 setup.py install --root="$pkgdir"
+}
