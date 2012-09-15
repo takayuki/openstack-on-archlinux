@@ -1,0 +1,18 @@
+# Maintainer: Ismo Toijala <ismo.toijala@gmail.com>
+
+pkgname=python-jsonschema
+pkgver=0.5
+pkgrel=1
+pkgdesc="library for defining the structure of JSON data."
+arch=('x86_64')
+url="http://pypi.python.org/pypi/jsonschema"
+license=('MIT')
+depends=('python')
+options=(!emptydirs)
+source=("http://pypi.python.org/packages/source/j/jsonschema/jsonschema-$pkgver.tar.gz")
+md5sums=('c60ce41f27ac2f0c10625ed8f786817f')
+
+package() {
+  cd "$srcdir/jsonschema-$pkgver"
+  python setup.py install --root="$pkgdir/" --optimize=1
+}
