@@ -1,0 +1,21 @@
+# Contributor:
+pkgname=openstack-python-keystoneclient
+pkgver=0.1.3
+pkgrel=1
+pkgdesc="Python bindings to the OpenStack Keystone API"
+arch=('x86_64')
+url=('https://github.com/openstack/python-keystoneclient')
+license=('Apache')
+depends=('openstack-base')
+source=("https://github.com/openstack/python-keystoneclient/tarball/${pkgver}")
+md5sums=('acefeb9fdaccda11cf46e02ba29a232f')
+
+build() {
+  cd "$srcdir/openstack-python-keystoneclient-a1d208b"
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/openstack-python-keystoneclient-a1d208b"
+  python2 setup.py install --root="${pkgdir}"
+}
