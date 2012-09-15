@@ -1,0 +1,38 @@
+# Contributor:
+pkgname=openstack-base
+pkgver=2012.1
+pkgrel=1
+pkgdesc="OpenStack base package"
+arch=('x86_64')
+url=("http://www.openstack.org/")
+license=('Apache')
+makedepends=()
+checkdepends=()
+depends=(
+  'python-babel'
+  'python-memcached'
+  'python-paramiko'
+  'python-simplejson'
+  'python2'
+  'python2-crypto'
+  'python2-dateutil'
+  'python2-decorator'
+  'python2-feedparser'
+  'python2-greenlet'
+  'python2-httplib2'
+  'python2-lxml'
+  'python2-nose'
+  'python2-pyxattr'
+  'python2-sqlalchemy'
+  'python2-tempita'
+  'python2-gflags'
+)
+optdepends=(
+  'dnsmasq'
+  'ebtables'
+  'iptables'
+  'libvirt'
+  'memcached'
+  'mysqld'
+  'mysql-python'
+)
