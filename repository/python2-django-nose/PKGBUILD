@@ -1,0 +1,21 @@
+# Contributor:
+pkgname=python2-django-nose
+pkgver=1.1
+pkgrel=1
+pkgdesc="Django test runner using nose"
+arch=('x86_64')
+url=("https://github.com/jbalogh/django-nose")
+license=('BSD')
+depends=('python2')
+source=("https://github.com/jbalogh/django-nose/tarball/${pkgver}")
+md5sums=('c215588f59745e5a1b8aad5d9a787580')
+
+build() {
+  cd "$srcdir/jbalogh-django-nose-4ec548b/"
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/jbalogh-django-nose-4ec548b/"
+  python2 setup.py install --root="${pkgdir}"
+}
