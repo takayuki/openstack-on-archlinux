@@ -1,0 +1,36 @@
+# $Id$
+# Maintainer: Dave Reisner <dreisner@archlinux.org>
+# Contributor: Paul Mattal <paul@archlinux.org>
+# Contributor: Tom Newsom <Jeepster@gmx.co.uk>
+
+pkgname=dnsmasq-contrib
+pkgver=2.63
+pkgrel=1
+pkgdesc="dnsmasq contrib"
+url="http://www.thekelleys.org.uk/dnsmasq/doc.html"
+arch=('i686' 'x86_64')
+license=('GPL')
+depends=('glibc')
+source=("http://www.thekelleys.org.uk/dnsmasq/dnsmasq-$pkgver.tar.gz")
+md5sums=('43e771997615ebcd8f6c6ffa60c3e40b')
+
+build() {
+  cd "dnsmasq-$pkgver/contrib/wrt"
+  make
+}
+
+package() {
+  cd "dnsmasq-$pkgver/contrib/wrt"
+  install -D -m755 "$srcdir/dnsmasq-$pkgver/contrib/wrt/dhcp_release" \
+    "$pkgdir/usr/bin/dhcp_release"
+  install -D -m755 "$srcdir/dnsmasq-$pkgver/contrib/wrt/dhcp_release.1" \
+    "$pkgdir/usr/share/man/man1/dhcp_release.1"
+  gzip -9 "$pkgdir/usr/share/man/man1/dhcp_release.1"
+  install -D -m755 "$srcdir/dnsmasq-$pkgver/contrib/wrt/dhcp_lease_time" \
+    "$pkgdir/usr/bin/dhcp_lease_time"
+  install -D -m755 "$srcdir/dnsmasq-$pkgver/contrib/wrt/dhcp_lease_time.1" \
+    "$pkgdir/usr/share/man/man1/dhcp_lease_time.1"
+  gzip -9 "$pkgdir/usr/share/man/man1/dhcp_lease_time.1"
+}
+
+# vim: ts=2 sw=2 et ft=sh
