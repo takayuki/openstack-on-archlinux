@@ -1,0 +1,21 @@
+# Contributor:
+pkgname=python2-cloudfiles
+pkgver=1.7.11
+pkgrel=1
+pkgdesc="Python language bindings for Cloud Files API"
+arch=('x86_64')
+url=("http://www.rackspacecloud.com/")
+license=('custom')
+depends=('python2')
+source=("https://github.com/rackspace/python-cloudfiles/tarball/${pkgver}")
+md5sums=('6497e550f60137686739e9d87e42335f')
+
+build() {
+  cd "$srcdir/rackspace-python-cloudfiles-d2d2abd/"
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/rackspace-python-cloudfiles-d2d2abd/"
+  python2 setup.py install --root="${pkgdir}"
+}
