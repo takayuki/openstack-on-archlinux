@@ -1,6 +1,6 @@
 # Contributor: Frederik Vos <frederik.vos@linvirt.nl>
 pkgname=tgt
-pkgver=1.0.26
+pkgver=1.0.31
 pkgrel=2
 pkgdesc="tgt daemon and userspace tools(ISCSI Support)"
 arch=('x86_64' 'i686')
@@ -19,10 +19,10 @@ install=
 source=(https://github.com/fujita/tgt/zipball/v$pkgver)
 
 noextract=()
-md5sums=('7829e36afce394284585b08fbf990116')
+md5sums=('be57e5856b4cbfe1fe7977ede56236e0')
 
 build() {
-  cd "$srcdir/fujita-tgt-3bf5573"
+  cd "$srcdir/fujita-tgt-93092df"
    
   make ISCSI=1 PREFIX="$pkgdir" || return 1
 
