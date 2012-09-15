@@ -1,0 +1,27 @@
+# Contributor:
+pkgname=openstack-keystone
+pkgver=2012.1.2
+pkgrel=1
+pkgdesc="Identity Service for OpenStack"
+arch=('x86_64')
+url=("http://docs.openstack.org/developer/keystone/")
+license=('Apache')
+depends=('openstack-base')
+source=("https://github.com/openstack/keystone/tarball/${pkgver}")
+md5sums=('391cb98059b51282a6de5da1e52f0d16')
+
+build() {
+  cd "$srcdir/openstack-keystone-173e8bd"
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/openstack-keystone-173e8bd"
+  python2 setup.py install --root="${pkgdir}"
+  mkdir -p "${pkgdir}/etc"
+  cp -a "${startdir}/etc/keystone" "${pkgdir}/etc"
+  cp -a "${startdir}/etc/rc.d" "${pkgdir}/etc"
+  chmod 700 "${pkgdir}/etc/keystone"
+  chmod 600 "${pkgdir}/etc/keystone/keystone.conf"
+  mkdir -p "${pkgdir}/var/log/keystone"
+}
