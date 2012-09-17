@@ -10,7 +10,6 @@ config_file="/etc/keystone/keystone.conf"
 case "$1" in
   start)
     test -d "/var/lock/$service" || mkdir -p "/var/lock/$service"
-    test -d "/var/log/$service" || mkdir -p "/var/log/$service"
     test -d "/var/run/$service" || mkdir -p "/var/run/$service"
     for daemon in ${daemons[@]}; do
       stat_busy "Starting $service-$daemon daemon"
