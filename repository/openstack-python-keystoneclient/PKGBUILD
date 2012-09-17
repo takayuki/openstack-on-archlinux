@@ -1,3 +1,4 @@
+# Maintainer:
 # Contributor:
 pkgname=openstack-python-keystoneclient
 pkgver=0.1.3

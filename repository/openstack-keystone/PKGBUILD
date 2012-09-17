@@ -1,3 +1,4 @@
+# Maintainer:
 # Contributor:
 pkgname=openstack-keystone
 pkgver=2012.1.2
@@ -24,8 +25,8 @@ package() {
   cd "$srcdir/openstack-keystone-173e8bd"
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
-  cp -a "${startdir}/etc/keystone" "${pkgdir}/etc"
-  cp -a "${startdir}/etc/rc.d" "${pkgdir}/etc"
+  cp -a "../../etc/keystone" "${pkgdir}/etc"
+  cp -a "../../etc/rc.d" "${pkgdir}/etc"
   chmod 700 "${pkgdir}/etc/keystone"
   chmod 600 "${pkgdir}/etc/keystone/keystone.conf"
   mkdir -p "${pkgdir}/var/log/keystone"

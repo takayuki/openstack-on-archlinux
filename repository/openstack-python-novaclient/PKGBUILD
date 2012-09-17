@@ -1,3 +1,4 @@
+# Maintainer:
 # Contributor:
 pkgname=openstack-python-novaclient
 pkgver=2.8.0

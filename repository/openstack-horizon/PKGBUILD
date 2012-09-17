@@ -1,3 +1,4 @@
+# Maintainer:
 # Contributor:
 pkgname=openstack-dashboard
 pkgver=2012.1.1
@@ -22,7 +23,7 @@ package() {
   cd "$srcdir/openstack-horizon-4e4219c/"
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
-  cp -a "${startdir}/etc/openstack-dashboard" "${pkgdir}/etc"
-  cp -a "${startdir}/etc/httpd" "${pkgdir}/etc"
+  cp -a "../../etc/openstack-dashboard" "${pkgdir}/etc"
+  cp -a "../../etc/httpd" "${pkgdir}/etc"
   ln -sf /etc/openstack-dashboard/local_settings.py "${pkgdir}/usr/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py"
 }
