@@ -1,0 +1,56 @@
+#!/bin/bash
+
+service='nova'
+daemons=('nova-api' 'nova-compute' 'nova-volume'
+         'nova-network' 'nova-scheduler' 'nova-cert')
+flagfile="/etc/nova/nova.conf"
+
+. /etc/rc.conf
+. /etc/rc.d/functions
+
+case "$1" in
+  start)
+    test -d "/var/lock/$service" || mkdir -p "/var/lock/$service"
+    test -d "/var/run/$service" || mkdir -p "/var/run/$service"
+    for daemon in ${daemons[@]}; do
+      stat_busy "Starting $service-$daemon daemon"
+      pidfile="/var/run/$service/$daemon.pid"
+      if [ ! -f "$pidfile" ]; then
+        "$daemon" --flagfile="$flagfile" >/dev/null 2>&1 &
+        echo $! >"$pidfile"
+        add_daemon $daemon
+        stat_done
+      else
+        stat_fail
+      fi
+    done
+    ;;
+  stop)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Stopping $daemon daemon"
+      pidfile="/var/run/$service/$daemon.pid"
+      if [ -f "$pidfile" ]; then
+        kill $(cat "$pidfile")
+        rm -f "$pidfile"
+        rm_daemon $daemon
+        stat_done
+      else
+        stat_fail
+      fi
+    done
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Checking $daemon status";
+      ck_status $daemon
+    done
+    ;;
+  *)
+    echo "usage: $0 {start|stop|restart|status}"
+esac
+
+exit 0

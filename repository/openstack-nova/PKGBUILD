@@ -1,0 +1,31 @@
+# Contributor:
+pkgname=openstack-nova
+pkgver=2012.1.2
+pkgrel=1
+pkgdesc="OpenStack Nova"
+arch=('x86_64')
+url=("http://docs.openstack.org/developer/nova/")
+license=('Apache')
+depends=('openstack-base')
+source=("https://github.com/openstack/nova/tarball/${pkgver}")
+md5sums=('a56d849e754609a06bec1b6c84586182')
+backup=(
+  'etc/nova/api-paste.ini'
+  'etc/nova/nova.conf'
+  'etc/nova/policy.json')
+
+build() {
+  cd "$srcdir/openstack-nova-7a7c8f8"
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/openstack-nova-7a7c8f8"
+  python2 setup.py install --root="${pkgdir}"
+  mkdir -p "${pkgdir}/etc"
+  cp -a "${startdir}/etc/nova" "${pkgdir}/etc"
+  cp -a "${startdir}/etc/rc.d" "${pkgdir}/etc"
+  chmod 700 "${pkgdir}/etc/nova"
+  mkdir -p "${pkgdir}/var/lib/nova/instances"
+  mkdir -p "${pkgdir}/var/log/nova"
+}
