@@ -1,0 +1,42 @@
+#!/bin/bash
+
+service="glance"
+daemons=("api" "registry")
+
+. /etc/rc.conf
+. /etc/rc.d/functions
+
+case "$1" in
+  start)
+    test -d "/var/lock/$service" || mkdir -p "/var/lock/$service"
+    test -d "/var/run/$service" || mkdir -p "/var/run/$service"
+    for daemon in ${daemons[@]}; do
+      stat_busy "Starting $service-$daemon daemon"
+      glance-control $daemon start
+      add_daemon "$service-$daemon"
+      stat_done
+    done
+    ;;
+  stop)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Stopping $service-$daemon daemon"
+      glance-control $daemon stop
+      rm_daemon "$service-$daemon"
+      stat_done
+    done
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Checking $service-$daemon status";
+      ck_status "$service-$daemon"
+    done
+    ;;
+  *)
+    echo "usage: $0 {start|stop|restart|status}"
+esac
+
+exit 0
