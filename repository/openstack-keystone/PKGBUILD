@@ -1,15 +1,26 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-keystone
-pkgver=2012.1.2
+pkgver=2012.2
 pkgrel=1
 pkgdesc="Identity Service for OpenStack"
 arch=('x86_64')
 url=("http://docs.openstack.org/developer/keystone/")
 license=('Apache')
-depends=('openstack-base')
-source=("https://github.com/openstack/keystone/tarball/${pkgver}")
-md5sums=('391cb98059b51282a6de5da1e52f0d16')
+depends=(
+  'python-pam'
+  'python-paste'
+  'python-paste-deploy'
+  'python2-eventlet'
+  'python2-greenlet'
+  'python2-iso8601'
+  'python2-lxml'
+  'python2-passlib'
+  'python2-routes'
+  'python2-sqlalchemy'
+  'python2-sqlalchemy-migrate')
+source=("https://github.com/openstack/keystone/tarball/2012.2")
+md5sums=('619bb72384d6735b302279f0b60ff692')
 backup=(
   'etc/keystone/default_catalog.templates'
   'etc/keystone/keystone.conf'
@@ -17,12 +28,12 @@ backup=(
   'etc/keystone/policy.json')
 
 build() {
-  cd "$srcdir/openstack-keystone-173e8bd"
+  cd "$srcdir/openstack-keystone-355d8ce"
   python2 setup.py build
 }
 
 package() {
-  cd "$srcdir/openstack-keystone-173e8bd"
+  cd "$srcdir/openstack-keystone-355d8ce"
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/keystone" "${pkgdir}/etc"
