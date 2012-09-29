@@ -1,7 +1,7 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-glance
-pkgver=2012.1.2
+pkgver=2012.2
 pkgrel=1
 pkgdesc="Image Service for OpenStack"
 arch=('x86_64')
@@ -9,29 +9,30 @@ url=("http://docs.openstack.org/developer/glance/")
 license=('Apache')
 depends=('mysql-python' 'python2')
 source=("https://github.com/openstack/glance/tarball/${pkgver}")
-md5sums=('f766ac1e9df38615d0f893feae79a480')
+md5sums=('effdeec6bb67c693fb73815ce8e46da5')
 backup=(
   'etc/glance/glance-api-paste.ini'
   'etc/glance/glance-api.conf'
-  'etc/glance/glance-cache-paste.ini'
   'etc/glance/glance-cache.conf'
   'etc/glance/glance-registry-paste.ini'
   'etc/glance/glance-registry.conf'
-  'etc/glance/glance-scrubber-paste.ini'
   'etc/glance/glance-scrubber.conf'
-  'etc/glance/policy.json')
+  'etc/glance/policy.json'
+  'etc/glance/schema-image.json')
 
 build() {
-  cd "$srcdir/openstack-glance-e4ea772"
+  cd "$srcdir/openstack-glance-5dc9652"
+  echo ${pkgver} >glance/versioninfo
   python2 setup.py build
 }
 
 package() {
-  cd "$srcdir/openstack-glance-e4ea772"
+  cd "$srcdir/openstack-glance-5dc9652"
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/glance" "${pkgdir}/etc"
   cp -a "../../etc/rc.d" "${pkgdir}/etc"
   chmod 700 "${pkgdir}/etc/glance"
   mkdir -p "${pkgdir}/var/log/glance"
+  rm -f "${pkgdir}/usr/bin/glance"
 }
