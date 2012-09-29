@@ -1,0 +1,21 @@
+# Contributor:
+pkgname=python2-cliff
+pkgver=1.2.1
+pkgrel=1
+pkgdesc='Command Line Interface Formulation Framework'
+arch=('i686' 'x86_64')
+url="https://github.com/dreamhost/cliff"
+license=('Apache')
+depends=('python2')
+source=("http://pypi.python.org/packages/source/c/cliff/cliff-${pkgver}.tar.gz")
+md5sums=('14943e93981a81079f7adf086e198fe7')
+
+build() {
+  cd cliff-$pkgver
+  python2 setup.py build
+}
+
+package() {
+  cd cliff-$pkgver
+  python2 setup.py install --root="$pkgdir"
+}
