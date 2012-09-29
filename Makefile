@@ -24,6 +24,7 @@ PACKAGES = \
   python2-sphinx \
   python2-sqlalchemy \
   python2-tempita \
+  python2-udev \
   python2-gflags \
   qemu-kvm
 
