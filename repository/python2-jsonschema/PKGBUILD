@@ -1,7 +1,7 @@
 # Maintainer: Ismo Toijala <ismo.toijala@gmail.com>
 
 pkgname=python2-jsonschema
-pkgver=0.5
+pkgver=0.2
 pkgrel=1
 pkgdesc="library for defining the structure of JSON data."
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('MIT')
 depends=('python2')
 options=(!emptydirs)
 source=("http://pypi.python.org/packages/source/j/jsonschema/jsonschema-$pkgver.tar.gz")
-md5sums=('c60ce41f27ac2f0c10625ed8f786817f')
+md5sums=('d91f3c642f37faf557ab07ed78ee8961')
 
 package() {
   cd "$srcdir/jsonschema-$pkgver"
