@@ -1,24 +1,30 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-python-novaclient
-pkgver=2.8.0
+pkgver=2.9.0
 pkgrel=1
 pkgdesc="Python bindings to the OpenStack Nova API"
 arch=('x86_64')
 url=('https://github.com/openstack/python-novaclient')
 license=('Apache')
-depends=('openstack-base')
+depends=(
+  'python-simplejson'
+  'python2-argparse'
+  'python2-httplib2'
+  'python2-iso8601'
+  'python2-prettytable')
 source=("https://github.com/openstack/python-novaclient/tarball/${pkgver}")
-md5sums=('137b0bdccd79bb7208c1f3d8c48e37ab')
+md5sums=('e4e0682a0f686be923cacad0f50ef96e')
 
 build() {
-  cd "$srcdir/openstack-python-novaclient-dfa1c71"
-  test -d .git || mkdir .git # force to generate versioninfo
+  cd "$srcdir/openstack-python-novaclient-cdebf72"
+  echo ${pkgver} >novaclient/versioninfo
   python2 setup.py build
   python2 setup.py sdist
 }
 
 package() {
-  cd "$srcdir/openstack-python-novaclient-dfa1c71"
+  cd "$srcdir/openstack-python-novaclient-cdebf72"
   python2 setup.py install --root="${pkgdir}"
+  rm -rf ${pkgdir}/usr/novaclient
 }
