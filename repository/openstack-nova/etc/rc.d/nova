@@ -1,9 +1,9 @@
 #!/bin/bash
 
 service='nova'
-daemons=('nova-api' 'nova-compute' 'nova-volume'
-         'nova-network' 'nova-scheduler' 'nova-cert')
-flagfile="/etc/nova/nova.conf"
+daemons=('nova-api' 'nova-compute' 'nova-network' 'nova-scheduler'
+         'nova-cert')
+configdir="/etc/nova"
 
 . /etc/rc.conf
 . /etc/rc.d/functions
@@ -16,7 +16,7 @@ case "$1" in
       stat_busy "Starting $service-$daemon daemon"
       pidfile="/var/run/$service/$daemon.pid"
       if [ ! -f "$pidfile" ]; then
-        "$daemon" --flagfile="$flagfile" >/dev/null 2>&1 &
+        "$daemon" --config-dir="$configdir" >/dev/null 2>&1 &
         echo $! >"$pidfile"
         add_daemon $daemon
         stat_done

@@ -1,5 +1,6 @@
 {
-    "admin_or_owner":  [["role:admin"], ["project_id:%(project_id)s"]],
+    "context_is_admin":  [["role:admin"]],
+    "admin_or_owner":  [["is_admin:True"], ["project_id:%(project_id)s"]],
     "default": [["rule:admin_or_owner"]],
 
 
@@ -9,7 +10,7 @@
     "compute:get_all": [],
 
 
-    "admin_api": [["role:admin"]],
+    "admin_api": [["is_admin:True"]],
     "compute_extension:accounts": [["rule:admin_api"]],
     "compute_extension:admin_actions": [["rule:admin_api"]],
     "compute_extension:admin_actions:pause": [["rule:admin_or_owner"]],
@@ -22,6 +23,7 @@
     "compute_extension:admin_actions:injectNetworkInfo": [["rule:admin_api"]],
     "compute_extension:admin_actions:createBackup": [["rule:admin_or_owner"]],
     "compute_extension:admin_actions:migrateLive": [["rule:admin_api"]],
+    "compute_extension:admin_actions:resetState": [["rule:admin_api"]],
     "compute_extension:admin_actions:migrate": [["rule:admin_api"]],
     "compute_extension:aggregates": [["rule:admin_api"]],
     "compute_extension:certificates": [],
@@ -33,6 +35,10 @@
     "compute_extension:disk_config": [],
     "compute_extension:extended_server_attributes": [["rule:admin_api"]],
     "compute_extension:extended_status": [],
+    "compute_extension:flavor_access": [],
+    "compute_extension:flavor_disabled": [],
+    "compute_extension:flavor_rxtx": [],
+    "compute_extension:flavor_swap": [],
     "compute_extension:flavorextradata": [],
     "compute_extension:flavorextraspecs": [],
     "compute_extension:flavormanage": [["rule:admin_api"]],
@@ -40,13 +46,17 @@
     "compute_extension:floating_ip_pools": [],
     "compute_extension:floating_ips": [],
     "compute_extension:hosts": [["rule:admin_api"]],
+    "compute_extension:hypervisors": [["rule:admin_api"]],
+    "compute_extension:instance_usage_audit_log": [["rule:admin_api"]],
     "compute_extension:keypairs": [],
     "compute_extension:multinic": [],
     "compute_extension:networks": [["rule:admin_api"]],
-    "compute_extension:quotas": [],
+    "compute_extension:networks:view": [],
+    "compute_extension:quotas:show": [],
+    "compute_extension:quotas:update": [["rule:admin_api"]],
+    "compute_extension:quota_classes": [],
     "compute_extension:rescue": [],
     "compute_extension:security_groups": [],
-    "compute_extension:server_action_list": [["rule:admin_api"]],
     "compute_extension:server_diagnostics": [["rule:admin_api"]],
     "compute_extension:simple_tenant_usage:show": [["rule:admin_or_owner"]],
     "compute_extension:simple_tenant_usage:list": [["rule:admin_api"]],
@@ -62,6 +72,13 @@
     "volume:get_volume_metadata": [],
     "volume:get_snapshot": [],
     "volume:get_all_snapshots": [],
+
+
+    "volume_extension:types_manage": [["rule:admin_api"]],
+    "volume_extension:types_extra_specs": [["rule:admin_api"]],
+    "volume_extension:volume_admin_actions:reset_status": [["rule:admin_api"]],
+    "volume_extension:snapshot_admin_actions:reset_status": [["rule:admin_api"]],
+    "volume_extension:volume_admin_actions:force_delete": [["rule:admin_api"]],
 
 
     "network:get_all_networks": [],
@@ -85,6 +102,7 @@
     "network:disassociate_floating_ip": [],
 
     "network:get_fixed_ip": [],
+    "network:get_fixed_ip_by_address": [],
     "network:add_fixed_ip_to_instance": [],
     "network:remove_fixed_ip_from_instance": [],
     "network:add_network_to_project": [],
