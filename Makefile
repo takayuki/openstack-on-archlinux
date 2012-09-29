@@ -19,6 +19,7 @@ PACKAGES = \
   python2-lxml \
   python2-netifaces \
   python2-nose \
+  python2-pyparsing \
   python2-pyxattr \
   python2-sphinx \
   python2-sqlalchemy \
