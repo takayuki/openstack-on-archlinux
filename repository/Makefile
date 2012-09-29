@@ -7,7 +7,9 @@ PACKAGES = \
   openstack-nova \
   openstack-python-keystoneclient \
   openstack-python-novaclient \
+  python2-cliff \
   python2-cloudfiles \
+  python2-cmd2 \
   python2-django-nose \
   python2-jsonschema \
   python2-prettytable \
