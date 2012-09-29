@@ -1,0 +1,29 @@
+# Maintainer:
+# Contributor:
+pkgname=openstack-python-quantumclient
+pkgver=2.1
+pkgrel=1
+pkgdesc="Python bindings to the OpenStack Quantum API"
+arch=('x86_64')
+url=('https://github.com/openstack/python-quantumclient')
+license=('Apache')
+depends=(
+  'python-simplejson'
+  'python2-argparse'
+  'python2-cliff'
+  'python2-httplib2'
+  'python2-prettytable'
+  'python2-pyparsing')
+source=("https://github.com/openstack/python-quantumclient/tarball/${pkgver}")
+md5sums=('a631397404ed02f1ba653ac9cd7aaeb3')
+
+build() {
+  cd "$srcdir/openstack-python-quantumclient-bb3dc7d"
+  echo "$pkgver" >quantumclient/versioninfo
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/openstack-python-quantumclient-bb3dc7d"
+  python2 setup.py install --root="${pkgdir}"
+}
