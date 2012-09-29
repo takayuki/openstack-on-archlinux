@@ -1,0 +1,27 @@
+# Maintainer:
+# Contributor:
+pkgname=openstack-python-glanceclient
+pkgver=0.5.1
+pkgrel=1
+pkgdesc="Python bindings to the OpenStack Image API"
+arch=('x86_64')
+url=('https://github.com/openstack/python-glanceclient')
+license=('Apache')
+depends=(
+  'openstack-python-keystoneclient'
+  'python2-argparse'
+  'python2-prettytable'
+  'python2-warlock')
+source=("https://github.com/openstack/python-glanceclient/tarball/${pkgver}")
+md5sums=('a69e794f07aa7517f4b3eca5e7c3a515')
+
+build() {
+  cd "$srcdir/openstack-python-glanceclient-3f67c46"
+  echo ${pkgver} >glanceclient/versioninfo
+  python2 setup.py build
+}
+
+package() {
+  cd "$srcdir/openstack-python-glanceclient-3f67c46"
+  python2 setup.py install --root="${pkgdir}"
+}
