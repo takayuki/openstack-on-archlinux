@@ -1,0 +1,21 @@
+# Contributor:
+pkgname=python2-warlock
+pkgver=0.4.0
+pkgrel=1
+pkgdesc='Build self-validating python objects using JSON schemas'
+arch=('i686' 'x86_64')
+url="https://github.com/bcwaldon/warlock"
+license=('Apache')
+depends=('python2')
+source=("http://pypi.python.org/packages/source/w/warlock/warlock-${pkgver}.tar.gz")
+md5sums=('cd232322e891f1ccb8152e308dfdf558')
+
+build() {
+  cd warlock-$pkgver
+  python2 setup.py build
+}
+
+package() {
+  cd warlock-$pkgver
+  python2 setup.py install --root="$pkgdir"
+}

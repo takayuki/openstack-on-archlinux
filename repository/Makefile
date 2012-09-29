@@ -12,6 +12,7 @@ PACKAGES = \
   python2-jsonschema \
   python2-prettytable \
   python2-sqlalchemy-migrate \
+  python2-warlock \
   tgt
 
 install:
