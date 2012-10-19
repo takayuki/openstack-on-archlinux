@@ -6,10 +6,8 @@ PACKAGES = \
   memcached \
   mysql-python \
   mysql \
-  python-babel \
   python-memcached \
-  python-paramiko \
-  python-simplejson \
+  python2-babel \
   python2-crypto \
   python2-dateutil \
   python2-decorator \
@@ -19,12 +17,14 @@ PACKAGES = \
   python2-lxml \
   python2-netifaces \
   python2-nose \
+  python2-paramiko \
   python2-pyparsing \
   python2-pyxattr \
+  python2-simplejson \
   python2-sphinx \
   python2-sqlalchemy \
   python2-tempita \
-  python2-udev \
+  python2-pyudev \
   python2-gflags \
   qemu-kvm
 
