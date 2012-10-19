@@ -1,15 +1,35 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-glance
-pkgver=2012.2
+pkgver=2012.2.1
 pkgrel=1
 pkgdesc="Image Service for OpenStack"
 arch=('x86_64')
 url=("http://docs.openstack.org/developer/glance/")
 license=('Apache')
-depends=('mysql-python' 'python2')
-source=("https://github.com/openstack/glance/tarball/${pkgver}")
-md5sums=('effdeec6bb67c693fb73815ce8e46da5')
+depends=(
+  'python-anyjson'
+  'python-paste'
+  'python-paste-deploy'
+  'python2'
+  'python2-argparse'
+  'python2-boto'
+  'python2-eventlet'
+  'python2-greenlet'
+  'python2-jsonschema'
+  'python2-httplib2'
+  'python2-kombu'
+  'python2-lxml'
+  'python2-passlib'
+  'python2-routes'
+  'python2-sqlalchemy'
+  'python2-sqlalchemy-migrate'
+  'python2-webob')
+optdepends=(
+  'mysql-python'
+)
+source=("https://github.com/openstack/glance/tarball/stable/folsom")
+md5sums=('6fa0894517c3c91ad7f7502f67ebd5b3')
 backup=(
   'etc/glance/glance-api-paste.ini'
   'etc/glance/glance-api.conf'
@@ -19,15 +39,14 @@ backup=(
   'etc/glance/glance-scrubber.conf'
   'etc/glance/policy.json'
   'etc/glance/schema-image.json')
-
 build() {
-  cd "$srcdir/openstack-glance-5dc9652"
+  cd "$srcdir"/openstack-glance-???????
   echo ${pkgver} >glance/versioninfo
   python2 setup.py build
 }
 
 package() {
-  cd "$srcdir/openstack-glance-5dc9652"
+  cd "$srcdir"/openstack-glance-???????
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/glance" "${pkgdir}/etc"
