@@ -1,7 +1,7 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-keystone
-pkgver=2012.2
+pkgver=2012.2.1
 pkgrel=1
 pkgdesc="Identity Service for OpenStack"
 arch=('x86_64')
@@ -19,21 +19,22 @@ depends=(
   'python2-routes'
   'python2-sqlalchemy'
   'python2-sqlalchemy-migrate')
-source=("https://github.com/openstack/keystone/tarball/2012.2")
-md5sums=('619bb72384d6735b302279f0b60ff692')
+optdepends=(
+  'mysql-python'
+)
+source=("https://github.com/openstack/keystone/tarball/stable/folsom")
+md5sums=('9a97333759ee87151cd5effa7c07b472')
 backup=(
   'etc/keystone/default_catalog.templates'
   'etc/keystone/keystone.conf'
   'etc/keystone/logging.conf'
   'etc/keystone/policy.json')
-
 build() {
-  cd "$srcdir/openstack-keystone-355d8ce"
+  cd "$srcdir"/openstack-keystone-???????
   python2 setup.py build
 }
-
 package() {
-  cd "$srcdir/openstack-keystone-355d8ce"
+  cd "$srcdir"/openstack-keystone-???????
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/keystone" "${pkgdir}/etc"

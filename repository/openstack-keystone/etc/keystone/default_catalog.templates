@@ -25,3 +25,8 @@ catalog.RegionOne.image.publicURL = http://localhost:9292/v1
 catalog.RegionOne.image.adminURL = http://localhost:9292/v1
 catalog.RegionOne.image.internalURL = http://localhost:9292/v1
 catalog.RegionOne.image.name = Image Service
+
+catalog.RegionOne.network.publicURL = http://localhost:9696
+catalog.RegionOne.network.adminURL = http://localhost:9696
+catalog.RegionOne.network.internalURL = http://localhost:9696
+catalog.RegionOne.network.name = Network Service
