@@ -1,22 +1,48 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-nova
-pkgver=2012.2
+pkgver=2012.2.1
 pkgrel=1
 pkgdesc="OpenStack Nova"
 arch=('x86_64')
 url=("http://docs.openstack.org/developer/nova/")
 license=('Apache')
-depends=('openstack-base')
-source=("https://github.com/openstack/nova/tarball/${pkgver}")
-md5sums=('3f28124a6c1512dfbd04c3f65165e806')
+depends=(
+  'openstack-python-glanceclient'
+  'openstack-python-quantumclient'
+  'python-anyjson'
+  'python-paste'
+  'python-paste-deploy'
+  'python2'
+  'python2-amqplib'
+  'python2-babel'
+  'python2-boto'
+  'python2-cheetah'
+  'python2-eventlet'
+  'python2-greenlet'
+  'python2-httplib2'
+  'python2-iso8601'
+  'python2-kombu'
+  'python2-lxml'
+  'python2-netaddr'
+  'python2-paramiko'
+  'python2-routes'
+  'python2-sqlalchemy'
+  'python2-sqlalchemy-migrate'
+  'python2-suds'
+  'python2-webob')
+optdepends=(
+  'mysql-python'
+)
+source=("https://github.com/openstack/nova/tarball/stable/folsom")
+md5sums=('677e9259cfa56c0ae726cb4400b015da')
 backup=(
   'etc/nova/api-paste.ini'
   'etc/nova/nova.conf'
   'etc/nova/policy.json')
 
 build() {
-  cd "$srcdir/openstack-nova-697ef36"
+  cd "$srcdir"/openstack-nova-???????
   cat <<EOF >>MANIFEST.in
 recursive-include nova/db/sqlalchemy/migrate_repo *.cfg *.sql
 EOF
@@ -24,7 +50,7 @@ EOF
 }
 
 package() {
-  cd "$srcdir/openstack-nova-697ef36"
+  cd "$srcdir"/openstack-nova-???????
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/nova" "${pkgdir}/etc"

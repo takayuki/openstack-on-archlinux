@@ -1,8 +1,7 @@
 #!/bin/bash
 
 service='nova'
-daemons=('nova-api' 'nova-compute' 'nova-network' 'nova-scheduler'
-         'nova-cert')
+daemons=('nova-api' 'nova-compute' 'nova-scheduler' 'nova-cert')
 configdir="/etc/nova"
 
 . /etc/rc.conf
@@ -20,6 +19,7 @@ case "$1" in
         echo $! >"$pidfile"
         add_daemon $daemon
         stat_done
+        sleep 1
       else
         stat_fail
       fi
