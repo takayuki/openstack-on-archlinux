@@ -1,0 +1,65 @@
+#!/bin/bash
+
+service='quantum'
+daemons=('quantum-server' 'quantum-openvswitch-agent' 'quantum-dhcp-agent' 'quantum-l3-agent')
+
+etcdir="/etc/quantum"
+logdir="/var/log/quantum"
+piddir="/var/run/quantum"
+
+declare -A args
+args['quantum-server']="quantum-server --config-file=$etcdir/quantum.conf --config-file=$etcdir/plugins/openvswitch/ovs_quantum_plugin.ini --log-dir=$logdir --log-file=quantum-server.log"
+args['quantum-openvswitch-agent']="quantum-openvswitch-agent --config-file $etcdir/quantum.conf --log-dir=$logdir --log-file=quantum-openvswitch-agent.log"
+args['quantum-dhcp-agent']="quantum-dhcp-agent --config-file $etcdir/quantum.conf --config-file $etcdir/dhcp_agent.ini --log-dir=$logdir --log-file=quantum-dhcp-agent.log"
+args['quantum-l3-agent']="quantum-l3-agent --config-file=$etcdir/quantum.conf --config-file=$etcdir/l3_agent.ini --log-dir=$logdir --log-file=quantum-l3-agent.log"
+
+. /etc/rc.conf
+. /etc/rc.d/functions
+
+case "$1" in
+  start)
+    test -d "/var/lock/$service" || mkdir -p "/var/lock/$service"
+    test -d "/var/run/$service" || mkdir -p "/var/run/$service"
+    for daemon in ${daemons[@]}; do
+      stat_busy "Starting $service-$daemon daemon"
+      pidfile="/var/run/$service/$daemon.pid"
+      if [ ! -f "$pidfile" ]; then
+        ${args[$daemon]} >/dev/null 2>&1 &
+        echo $! >"$pidfile"
+        add_daemon $daemon
+        stat_done
+        sleep 1
+      else
+        stat_fail
+      fi
+    done
+    ;;
+  stop)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Stopping $daemon daemon"
+      pidfile="/var/run/$service/$daemon.pid"
+      if [ -f "$pidfile" ]; then
+        kill $(cat "$pidfile")
+        rm -f "$pidfile"
+        rm_daemon $daemon
+        stat_done
+      else
+        stat_fail
+      fi
+    done
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Checking $daemon status";
+      ck_status $daemon
+    done
+    ;;
+  *)
+    echo "usage: $0 {create|init|start|stop|restart|status}"
+esac
+
+exit 0

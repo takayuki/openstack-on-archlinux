@@ -1,0 +1,46 @@
+# Maintainer:
+# Contributor:
+pkgname=openstack-quantum
+pkgver=2012.2.1
+pkgrel=1
+pkgdesc="Identity Service for OpenStack"
+arch=('x86_64')
+url=("http://docs.openstack.org/developer/quantum/")
+license=('Apache')
+depends=(
+  'openstack-python-quantumclient'
+  'python-anyjson'
+  'python-paste'
+  'python-paste-deploy'
+  'python2-amqplib'
+  'python2-eventlet'
+  'python2-greenlet'
+  'python2-httplib2'
+  'python2-iso8601'
+  'python2-kombu'
+  'python2-lxml'
+  'python2-netaddr'
+  'python2-routes'
+  'python2-sqlalchemy'
+  'python2-udev'
+  'python2-webob'
+)
+optdepends=(
+  'mysql-python'
+)
+source=("https://github.com/openstack/quantum/tarball/stable/folsom")
+md5sums=('3a8c0f8a0b6f368cb6f1f4aa2500ae76')
+backup=()
+build() {
+  cd "$srcdir"/openstack-quantum-???????
+  python2 setup.py build
+}
+package() {
+  cd "$srcdir"/openstack-quantum-???????
+  python2 setup.py install --root="${pkgdir}"
+  mkdir -p "${pkgdir}/etc"
+  cp -a "../../etc/quantum" "${pkgdir}/etc"
+  cp -a "../../etc/rc.d" "${pkgdir}/etc"
+  chmod 700 "${pkgdir}/etc/quantum"
+  mkdir -p "${pkgdir}/var/log/quantum"
+}
