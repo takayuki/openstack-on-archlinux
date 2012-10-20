@@ -1,0 +1,84 @@
+#!/bin/bash
+
+service='openvswitch'
+version=1.8.90
+daemons=('ovsdb-server' 'ovs-vswitchd')
+
+modpath="/usr/lib/modules/$(uname -r)/kernel/misc/openvswitch_mod.ko"
+dbpath=/etc/openvswitch/conf.db
+sockpath="/var/run/openvswitch/db.sock"
+piddir="/var/run/openvswitch"
+logdir="/var/log/openvswitch"
+
+declare -A args
+args['ovsdb-server']="ovsdb-server $dbpath --remote punix:$sockpath --pidfile=$piddir/ovsdb-server.pid --log-file=$logdir/ovsdb-server.log --detach"
+args['ovs-vswitchd']="ovs-vswitchd unix:$sockpath --pidfile=$piddir/ovs-vswitchd.pid --log-file=$logdir/ovs-vswitchd.log --monitor --detach"
+
+. /etc/rc.conf
+. /etc/rc.d/functions
+
+case "$1" in
+  add)
+    dkms add -m openvswitch -v $version
+    ;;
+  build)
+    dkms build -m openvswitch -v $version
+    ;;
+  install)
+    dkms install -m openvswitch -v $version
+    ;;
+  remove)
+    dkms remove -m openvswitch -v $version -k $(uname -r)
+    ;;
+  create)
+    ovsdb-tool create "$dbpath"
+    ;;
+  init)
+    ovs-vsctl init
+    ;;
+  start)
+    test -d "/var/lock/$service" || mkdir -p "/var/lock/$service"
+    test -d "/var/run/$service" || mkdir -p "/var/run/$service"
+    insmod "$modpath" || exit 1
+    for daemon in ${daemons[@]}; do
+      stat_busy "Starting $service-$daemon daemon"
+      pidfile="/var/run/$service/$daemon.pid"
+      if [ ! -f "$pidfile" ]; then
+        ${args[$daemon]}
+        add_daemon $daemon
+        stat_done
+      else
+        stat_fail
+      fi
+    done
+    ;;
+  stop)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Stopping $daemon daemon"
+      pidfile="/var/run/$service/$daemon.pid"
+      if [ -f "$pidfile" ]; then
+        kill $(cat "$pidfile")
+        rm -f "$pidfile"
+        rm_daemon $daemon
+        stat_done
+      else
+        stat_fail
+      fi
+    done
+    modprobe -r openvswitch
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    for daemon in ${daemons[@]}; do
+      stat_busy "Checking $daemon status";
+      ck_status $daemon
+    done
+    ;;
+  *)
+    echo "usage: $0 {create|init|start|stop|restart|status}"
+esac
+
+exit 0

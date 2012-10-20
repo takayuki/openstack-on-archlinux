@@ -1,0 +1,42 @@
+# Maintainer:
+# Contributor:
+pkgname=openvswitch
+pkgver=1.8.90
+pkgrel=1
+pkgdesc="a production quality, multilayer virtual switch"
+arch=('x86_64')
+url=("http://openvswitch.org/")
+license=('Apache')
+depends=('dkms' 'linux-headers' 'python2')
+source=()
+md5sums=()
+backup=()
+build() {
+  cd "$srcdir"
+  if [[ -d openvswitch ]]; then
+    cd openvswitch 
+    git remote update
+    git rebase origin/master master
+  else
+    git clone git://openvswitch.org/openvswitch
+    cd openvswitch 
+  fi
+  git archive --format=tar.gz --prefix=$pkgname-$pkgver/ master \
+    >../../$pkgname-$pkgver.tar.gz
+  ./boot.sh
+  #./configure PYTHON=/usr/bin/python2 --prefix=/usr --localstatedir=/var \
+  #  --with-linux="/usr/src/linux-$(uname -r)"
+  ./configure PYTHON=/usr/bin/python2 --prefix=/usr --localstatedir=/var
+  make
+}
+package() {
+  cd "$srcdir/openvswitch"
+  make DESTDIR="$pkgdir" install
+  mkdir -p "${pkgdir}/etc"
+  cp -a "../../etc/rc.d" "${pkgdir}/etc"
+  mkdir -p "${pkgdir}/etc/openvswitch"
+  mkdir -p "${pkgdir}/usr/src"
+  tar zxvf ../../$pkgname-$pkgver.tar.gz -C "${pkgdir}/usr/src"
+  cp "../../dkms.conf" "${pkgdir}/usr/src/$pkgname-$pkgver"
+  mkdir -p "${pkgdir}/var/log/openvswitch"
+}
