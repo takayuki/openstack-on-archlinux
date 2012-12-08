@@ -28,8 +28,8 @@ depends=(
 optdepends=(
   'mysql-python'
 )
-source=("https://github.com/openstack/glance/tarball/stable/folsom")
-md5sums=('6fa0894517c3c91ad7f7502f67ebd5b3')
+source=("https://github.com/openstack/glance/archive/${pkgver}.zip")
+md5sums=('ddf3da615de4ba88f407562436da1867')
 backup=(
   'etc/glance/glance-api-paste.ini'
   'etc/glance/glance-api.conf'
@@ -40,13 +40,13 @@ backup=(
   'etc/glance/policy.json'
   'etc/glance/schema-image.json')
 build() {
-  cd "$srcdir"/openstack-glance-???????
+  cd "$srcdir"/glance-${pkgver}
   echo ${pkgver} >glance/versioninfo
   python2 setup.py build
 }
 
 package() {
-  cd "$srcdir"/openstack-glance-???????
+  cd "$srcdir"/glance-${pkgver}
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/glance" "${pkgdir}/etc"
