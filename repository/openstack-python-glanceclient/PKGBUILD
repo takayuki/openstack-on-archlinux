@@ -1,7 +1,7 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-python-glanceclient
-pkgver=0.5.1
+pkgver=0.6.0
 pkgrel=1
 pkgdesc="Python bindings to the OpenStack Image API"
 arch=('x86_64')
@@ -13,15 +13,15 @@ depends=(
   'python2-prettytable'
   'python2-warlock')
 source=("https://github.com/openstack/python-glanceclient/tarball/${pkgver}")
-md5sums=('a69e794f07aa7517f4b3eca5e7c3a515')
+md5sums=('972d20c917ba367750ce63cd37456e62')
 
 build() {
-  cd "$srcdir/openstack-python-glanceclient-3f67c46"
+  cd "$srcdir"/openstack-python-glanceclient-???????
   echo ${pkgver} >glanceclient/versioninfo
   python2 setup.py build
 }
 
 package() {
-  cd "$srcdir/openstack-python-glanceclient-3f67c46"
+  cd "$srcdir"/openstack-python-glanceclient-???????
   python2 setup.py install --root="${pkgdir}"
 }
