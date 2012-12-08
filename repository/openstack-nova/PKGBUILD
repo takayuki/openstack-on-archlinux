@@ -34,15 +34,15 @@ depends=(
 optdepends=(
   'mysql-python'
 )
-source=("https://github.com/openstack/nova/tarball/stable/folsom")
-md5sums=('677e9259cfa56c0ae726cb4400b015da')
+source=("https://github.com/openstack/nova/archive/${pkgver}.zip")
+md5sums=('90dcd3b43b4533ddbd48dc86eeedae6f')
 backup=(
   'etc/nova/api-paste.ini'
   'etc/nova/nova.conf'
   'etc/nova/policy.json')
 
 build() {
-  cd "$srcdir"/openstack-nova-???????
+  cd "$srcdir/nova-${pkgver}"
   cat <<EOF >>MANIFEST.in
 recursive-include nova/db/sqlalchemy/migrate_repo *.cfg *.sql
 EOF
@@ -50,7 +50,7 @@ EOF
 }
 
 package() {
-  cd "$srcdir"/openstack-nova-???????
+  cd "$srcdir/nova-${pkgver}"
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/nova" "${pkgdir}/etc"
