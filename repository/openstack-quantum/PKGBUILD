@@ -28,15 +28,15 @@ depends=(
 optdepends=(
   'mysql-python'
 )
-source=("https://github.com/openstack/quantum/tarball/stable/folsom")
-md5sums=('3a8c0f8a0b6f368cb6f1f4aa2500ae76')
+source=("https://github.com/openstack/quantum/archive/${pkgver}.zip")
+md5sums=('2d4f070860c5ce33f97a304a086f7cfd')
 backup=()
 build() {
-  cd "$srcdir"/openstack-quantum-???????
+  cd "$srcdir/quantum-${pkgver}"
   python2 setup.py build
 }
 package() {
-  cd "$srcdir"/openstack-quantum-???????
+  cd "$srcdir/quantum-${pkgver}"
   python2 setup.py install --root="${pkgdir}"
   mkdir -p "${pkgdir}/etc"
   cp -a "../../etc/quantum" "${pkgdir}/etc"
