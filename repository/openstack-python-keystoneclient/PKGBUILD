@@ -1,8 +1,8 @@
 # Maintainer:
 # Contributor:
 pkgname=openstack-python-keystoneclient
-pkgver=0.1.3
-pkgrel=2
+pkgver=0.2.0
+pkgrel=1
 pkgdesc="Python bindings to the OpenStack Keystone API"
 arch=('x86_64')
 url=('https://github.com/openstack/python-keystoneclient')
@@ -13,15 +13,15 @@ depends=(
   'python2-httplib2'
   'python2-prettytable')
 source=("https://github.com/openstack/python-keystoneclient/tarball/${pkgver}")
-md5sums=('acefeb9fdaccda11cf46e02ba29a232f')
+md5sums=('7f759f73a94f5ba7652ae7e4b46c66c9')
 
 build() {
-  cd "$srcdir/openstack-python-keystoneclient-a1d208b"
+  cd "$srcdir"/openstack-python-keystoneclient-???????
   echo "$pkgver" >keystoneclient/versioninfo
   python2 setup.py build
 }
 
 package() {
-  cd "$srcdir/openstack-python-keystoneclient-a1d208b"
+  cd "$srcdir"/openstack-python-keystoneclient-???????
   python2 setup.py install --root="${pkgdir}"
 }
