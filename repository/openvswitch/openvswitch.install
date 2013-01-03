@@ -1,0 +1,27 @@
+post_install() {
+  pkgver=${1%-*}
+  cd /usr/src/openvswitch-$pkgver && ./boot.sh
+  /etc/rc.d/openvswitch add && \
+  /etc/rc.d/openvswitch build && \
+  /etc/rc.d/openvswitch install
+}
+
+post_install() {
+  pkgver=${1%-*}
+  cd /usr/src/openvswitch-$pkgver && ./boot.sh
+  /etc/rc.d/openvswitch add && \
+  /etc/rc.d/openvswitch build && \
+  /etc/rc.d/openvswitch install
+}
+
+pre_upgrade() {
+  /etc/rc.d/openvswitch stop
+  /etc/rc.d/openvswitch uninstall
+  /etc/rc.d/openvswitch remove
+}
+
+pre_remove() {
+  /etc/rc.d/openvswitch stop
+  /etc/rc.d/openvswitch uninstall
+  /etc/rc.d/openvswitch remove
+}
